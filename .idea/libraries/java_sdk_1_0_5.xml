@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="java-sdk-1.0.5">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.contentful.java/java-sdk/1.0.5/efa9a3e4f4622b6ddd3b64a92ba32645f3a86e43/java-sdk-1.0.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.contentful.java/java-sdk/1.0.5/2af8b453c9ce7725224fb020a25cb289f9bc92a1/java-sdk-1.0.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
