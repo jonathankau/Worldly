@@ -4,21 +4,11 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.contentful.java.api.CDACallback;
-import com.contentful.java.api.CDAClient;
-import com.contentful.java.model.CDAArray;
-import com.contentful.java.model.CDAEntry;
-import com.contentful.java.model.CDAResource;
 import com.jonathankau.worldly.R;
-
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class PlaceholderFragment extends Fragment {
 
@@ -38,28 +28,6 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CDAClient client = new CDAClient.Builder()
-                .setSpaceKey("zhvvoct54c0z")
-                .setAccessToken("d76a8349541f51bfd3ae2d29f24d339d04576cc9d453c989e95ddae258b1664e")
-                .build();
-
-        client.fetchEntries(new CDACallback<CDAArray>() {
-            @Override
-            protected void onSuccess(CDAArray array, Response response) {
-                // success
-                for(CDAResource entry: array.getItems()) {
-                    Toast.makeText(PlaceholderFragment.this.getActivity(),
-                            ((CDAEntry) entry).getFields().toString(), Toast.LENGTH_LONG).show();
-                    Log.d("JKAU", ((CDAEntry) entry).getFields().toString());
-                }
-            }
-
-            @Override
-            protected void onFailure(RetrofitError retrofitError) {
-                // failure
-                Toast.makeText(PlaceholderFragment.this.getActivity(), retrofitError.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     @Override
@@ -79,12 +47,6 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override

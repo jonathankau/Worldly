@@ -1,46 +1,36 @@
 package com.jonathankau.worldly.fragments;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
 import com.jonathankau.worldly.R;
+import com.jonathankau.worldly.activities.ArticleActivity;
+import com.jonathankau.worldly.adapters.FeedItemAdapter;
+import com.jonathankau.worldly.model.ArticleEntry;
+import com.nirhart.parallaxscroll.views.ParallaxListView;
 
-import com.jonathankau.worldly.model.DummyContent;
+import java.util.ArrayList;
 
-/**
- * A fragment representing a list of Items.
- * <p />
- * Large screen devices (such as tablets) are supported by replacing the ListView
- * with a GridView.
- * <p />
- * Activities containing this fragment MUST implement the {@link Callbacks}
- * interface.
- */
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class FeedItemFragment extends Fragment implements AbsListView.OnItemClickListener {
+    @InjectView(R.id.list) ParallaxListView mListView;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String ARG_PARAM1 = "DATA_ENTRIES";
+    private ArrayList<ArticleEntry> data;
 
     private OnFragmentInteractionListener mListener;
-
-    /**
-     * The fragment's ListView/GridView.
-     */
-    private AbsListView mListView;
 
     /**
      * The Adapter which will be used to populate the ListView/GridView with
@@ -49,11 +39,10 @@ public class FeedItemFragment extends Fragment implements AbsListView.OnItemClic
     private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public static FeedItemFragment newInstance(String param1, String param2) {
+    public static FeedItemFragment newInstance(ArrayList<ArticleEntry> data) {
         FeedItemFragment fragment = new FeedItemFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putParcelableArrayList("DATA_ENTRIES", data);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,13 +59,10 @@ public class FeedItemFragment extends Fragment implements AbsListView.OnItemClic
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            data = getArguments().getParcelableArrayList(ARG_PARAM1);
         }
 
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+        mAdapter = new FeedItemAdapter(getActivity(), data);
     }
 
     @Override
@@ -85,8 +71,14 @@ public class FeedItemFragment extends Fragment implements AbsListView.OnItemClic
         View view = inflater.inflate(R.layout.fragment_feeditem, container, false);
 
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        ButterKnife.inject(this, view);
+        TextView v = new TextView(this.getActivity());
+        v.setText("Streak: 0");
+        v.setGravity(Gravity.CENTER);
+        v.setTextSize(40);
+        v.setHeight(350);
+        mListView.addParallaxedHeaderView(v);
+        (mListView).setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
@@ -97,12 +89,12 @@ public class FeedItemFragment extends Fragment implements AbsListView.OnItemClic
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                + " must implement OnFragmentInteractionListener");
-        }
+//        try {
+//            mListener = (OnFragmentInteractionListener) activity;
+//        } catch (ClassCastException e) {
+//            throw new ClassCastException(activity.toString()
+//                + " must implement OnFragmentInteractionListener");
+//        }
     }
 
     @Override
@@ -114,11 +106,15 @@ public class FeedItemFragment extends Fragment implements AbsListView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
-        }
+        Intent intent = new Intent(this.getActivity(), ArticleActivity.class);
+        ArticleEntry selectedEntry = (ArticleEntry) mAdapter.getItem(position - 1);
+
+        Bundle args = new Bundle();
+        args.putParcelable("ARTICLE_ENTRY", selectedEntry);
+        intent.putExtras(args);
+
+        startActivity(intent);
+
     }
 
     /**
