@@ -63,11 +63,12 @@ public class FeedItemAdapter extends BaseAdapter {
             view.setTag(holder);
         }
 
-        holder.header.setText("Tomatoes Are Actually Potatoes In Disguise");
+        // Load text and image
+        ArticleEntry entry = getItem(i);
+
+        holder.header.setText(entry.getHeader());
         holder.header.setTypeface(tisaPro);
 
-        // Use Ion to load image from url
-        ArticleEntry entry = getItem(i);
         Picasso.with(context)
                 .load(entry.getImageUrl())
                 .fit()

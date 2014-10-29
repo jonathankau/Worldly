@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,12 +71,8 @@ public class FeedItemFragment extends Fragment implements AbsListView.OnItemClic
 
         // Set the adapter
         ButterKnife.inject(this, view);
-        TextView v = new TextView(this.getActivity());
-        v.setText("Streak: 0");
-        v.setGravity(Gravity.CENTER);
-        v.setTextSize(40);
-        v.setHeight(350);
-        mListView.addParallaxedHeaderView(v);
+        View header = inflater.inflate(R.layout.layout_headeritem, null, false);
+        mListView.addParallaxedHeaderView(header);
         (mListView).setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
@@ -106,15 +101,18 @@ public class FeedItemFragment extends Fragment implements AbsListView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this.getActivity(), ArticleActivity.class);
-        ArticleEntry selectedEntry = (ArticleEntry) mAdapter.getItem(position - 1);
+        if (position > 0) {
 
-        Bundle args = new Bundle();
-        args.putParcelable("ARTICLE_ENTRY", selectedEntry);
-        intent.putExtras(args);
+            Intent intent = new Intent(this.getActivity(), ArticleActivity.class);
+            ArticleEntry selectedEntry = (ArticleEntry) mAdapter.getItem(position - 1);
 
-        startActivity(intent);
+            Bundle args = new Bundle();
+            args.putParcelable("ARTICLE_ENTRY", selectedEntry);
+            intent.putExtras(args);
 
+            startActivity(intent);
+
+        }
     }
 
     /**

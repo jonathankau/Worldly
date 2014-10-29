@@ -25,6 +25,7 @@ public class ArticleActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Obtain bundle args
         entry = getIntent().getExtras().getParcelable("ARTICLE_ENTRY");

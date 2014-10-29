@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Worldly.iml" filepath="$PROJECT_DIR$/Worldly.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/circularProgressBar/circularProgressBar.iml" filepath="$PROJECT_DIR$/libraries/circularProgressBar/circularProgressBar.iml" />
     </modules>
   </component>
 </project>
