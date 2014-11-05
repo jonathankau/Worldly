@@ -69,6 +69,9 @@ public class FeedItemAdapter extends BaseAdapter {
         holder.header.setText(entry.getHeader());
         holder.header.setTypeface(tisaPro);
 
+        holder.number.setText(Integer.toString(i + 1));
+        holder.number.setTypeface(tisaPro);
+
         Picasso.with(context)
                 .load(entry.getImageUrl())
                 .fit()
@@ -81,6 +84,7 @@ public class FeedItemAdapter extends BaseAdapter {
     static class ViewHolder {
         @InjectView(R.id.article_image) ImageView image;
         @InjectView(R.id.article_header) TextView header;
+        @InjectView(R.id.article_number) TextView number;
 
         public ViewHolder(View view) {
             ButterKnife.inject(this, view);

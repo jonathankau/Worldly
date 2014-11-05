@@ -9,16 +9,24 @@
         android:layout_height="200dp"
         android:id="@+id/article_image"/>
 
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="64dp"-->
-        <!--android:layout_alignTop="@id/article_image"-->
-        <!--android:background="@drawable/top_shadow"/>-->
-
     <View
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="#7025271E"/>
+
+    <View android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/circle"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"/>
+
+    <TextView android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/article_number"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:textColor="#FFFFFF"/>
 
     <TextView
         android:layout_width="wrap_content"
